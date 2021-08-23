@@ -2,6 +2,7 @@ import Header from "../src/components/header";
 import Footer from "../src/components/footer";
 import Menu from "../src/components/menu";
 import styles from "../styles/Home.module.css";
+import CardTraveler from "../src/components/cardTraveler";
 
 export default function Rank() {
   return (
@@ -15,9 +16,7 @@ export default function Rank() {
             Rank de Atividades
           </h1>
 
-          <p className={styles?.description}>
-            Um sistema desenvolvido para simular o lucro por vendas em marketplaces!
-          </p>
+          <CardTraveler></CardTraveler>
         </div>
       </main>
 

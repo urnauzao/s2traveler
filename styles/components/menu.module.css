@@ -27,3 +27,10 @@
 .menuAtivo{
     color: var(--blue-twitter) !important;
 }
+
+body .p-menu .p-menu-list > .p-submenu-header {
+    display: none;
+}
+body .p-menu .p-menuitem.p-menuitem-active > .p-menuitem-link {
+    background-color: #eaeaea;
+}
