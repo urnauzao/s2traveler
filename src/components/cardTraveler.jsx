@@ -1,18 +1,47 @@
 import "primeflex/primeflex.css";
+import useSwr from "swr";
+import Link from "next/link";
+import fetcher from "../services/HttpRequestService";
+import { urlGetLugares } from "../repository/Lugares";
+
 const CardTraveler = () => {
+
+    const { data, error } = useSwr(urlGetLugares, fetcher);
+
+    if (error) return <div>Failed to load users</div>;
+    if (!data) return <div>Loading...</div>;
+
+    // return (
+    //     <ul>
+    //         {data.map((user) => (
+    //             <li key={user.id}>
+    //                 <Link href="/user/[id]" as={`/user/${user.id}`}>
+    //                     <a>{`User ${user.id}`}</a>
+    //                 </Link>
+    //             </li>
+    //         ))}
+    //     </ul>
+    // );
+
+
+
+    // <div class="card">
+    //     <div class="flex justify-content-center flex-wrap card-container yellow-container">
+    //         <div class="flex align-items-center justify-content-center w-4rem h-4rem bg-yellow-500 font-bold text-gray-900 border-round m-2">1</div>
+    //         <div class="flex align-items-center justify-content-center w-4rem h-4rem bg-yellow-500 font-bold text-gray-900 border-round m-2">2</div>
+    //         <div class="flex align-items-center justify-content-center w-4rem h-4rem bg-yellow-500 font-bold text-gray-900 border-round m-2">3</div>
+    //     </div>
+    // </div>
+
     return (
         <div className="card">
             <div className="grid">
-                <div className="col-12 md:col-6 lg:col-3 sm:flex-nowrap bg-blue-600 text-white">
-                    <h3 className="text-white">Teste A</h3>
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-                </div>
-                <div className="col-12 md:col-6 lg:col-3">
-                    <h3 className="">Teste B</h3>
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-                </div>
-                <div className="col-12 md:col-6 lg:col-3">C</div>
-                <div className="col-12 md:col-6 lg:col-3">D</div>
+                {data.map((lugar) => (
+                    <div key={lugar.id} className="col-12 md:col-6 lg:col-3 sm:flex-nowrap bg-blue-600 text-white">
+                        <h3 className="text-white">{lugar.nome}</h3>
+                        <p>{lugar.descricao}</p>
+                    </div>
+                ))}
             </div>
         </div>
     );
