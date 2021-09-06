@@ -6,23 +6,30 @@ import { Menubar } from "primereact/menubar";
 import { InputText } from "primereact/inputtext";
 import Image from "next/image";
 import logo from "../../public/favicon.ico";
-
+import { PrimeIcons } from "primereact/api";
 
 const Menu = () => {
+    const classNameActiveItemMenu = "underline font-bold border-round";
     const router = useRouter();
     const items = [
         {
             label: "Início",
             icon: "pi pi-fw pi-file",
             url: "/",
-            className: router.pathname === "/" && "p-menuitem-active"
+            className: router.pathname === "/" && classNameActiveItemMenu
+        },
+        {
+            label: "Onde Ir",
+            icon: "pi pi-map-marker",
+            url: "/onde_ir",
+            className: router.pathname === "/onde_ir" && classNameActiveItemMenu
         },
         {
             label: "Rank",
-            icon: "pi pi-fw pi-pencil",
+            icon: "pi pi-angle-double-up",
             url: "/rank",
-            className: router.pathname === "/rank" && "p-menuitem-active"
-        }
+            className: router.pathname === "/rank" && classNameActiveItemMenu
+        },
     ];
 
     const start = <Image alt="logo" src={logo} width="25"></Image>;
@@ -32,11 +39,9 @@ const Menu = () => {
     }} />;
 
     return (
-        <div>
-            <div className="card">
-                <Menubar model={items} start={start} end={end} className="shadow-1" />
-            </div>
-        </div>
+        // <div className="card bg-pink-400">
+            <Menubar model={items} start={start} end={end} className="shadow-1 border-primary border-noround p-1" />
+        // </div>
     );
 };
 

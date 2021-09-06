@@ -1,8 +1,9 @@
 import "primeflex/primeflex.css";
 import useSwr from "swr";
-import Link from "next/link";
 import fetcher from "../services/HttpRequestService";
 import { urlGetLugares } from "../repository/Lugares";
+import Image from "next/image";
+import { Rating } from "primereact/rating";
 
 const CardTraveler = () => {
 
@@ -11,39 +12,37 @@ const CardTraveler = () => {
     if (error) return <div>Failed to load users</div>;
     if (!data) return <div>Loading...</div>;
 
-    // return (
-    //     <ul>
-    //         {data.map((user) => (
-    //             <li key={user.id}>
-    //                 <Link href="/user/[id]" as={`/user/${user.id}`}>
-    //                     <a>{`User ${user.id}`}</a>
-    //                 </Link>
-    //             </li>
-    //         ))}
-    //     </ul>
-    // );
-
-
-
-    // <div class="card">
-    //     <div class="flex justify-content-center flex-wrap card-container yellow-container">
-    //         <div class="flex align-items-center justify-content-center w-4rem h-4rem bg-yellow-500 font-bold text-gray-900 border-round m-2">1</div>
-    //         <div class="flex align-items-center justify-content-center w-4rem h-4rem bg-yellow-500 font-bold text-gray-900 border-round m-2">2</div>
-    //         <div class="flex align-items-center justify-content-center w-4rem h-4rem bg-yellow-500 font-bold text-gray-900 border-round m-2">3</div>
-    //     </div>
-    // </div>
+    const myLoaderImage = (src) => {
+        return src;
+    };
 
     return (
-        <div className="card">
-            <div className="grid">
-                {data.map((lugar) => (
-                    <div key={lugar.id} className="col-12 md:col-6 lg:col-3 sm:flex-nowrap bg-blue-600 text-white">
-                        <h3 className="text-white">{lugar.nome}</h3>
+        <div className="grid">
+            {data.map((lugar) => (
+                <div key={lugar.id} className="col-12 sm:col-6 md:col-4 lg:col-3 xl:col-2" onClick={() => { window.location = `/lugares/${lugar.id}`; }}>
+                    <div className="box bg-gray-100 border-round p-2 shadow-3 cursor-pointer">
+                        <div className="box text-center">
+                            <Image
+                                loading="lazy"
+                                src="/images/loading.git"
+                                loader={() => myLoaderImage(lugar?.imagem_capa)}
+                                // src={lugar?.imagem_capa}
+                                width={200}
+                                height={200}
+                                // layout='fill'
+                                // objectFit='contain'
+                                alt={lugar.nome}
+                                className="border-round shadow-8"
+                            />
+                        </div>
+                        <h3 className="text-teal-900 text-center">{lugar.nome}</h3>
+                        <Rating value={lugar.classificacao} cancel={false} onChange={(e) => alert("valor: "+e.value+" | Não implementado")} className="text-center my-1" />
                         <p>{lugar.descricao}</p>
                     </div>
-                ))}
-            </div>
+                </div>
+            ))}
         </div>
+
     );
 };
 export default CardTraveler;
