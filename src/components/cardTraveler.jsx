@@ -37,7 +37,7 @@ const CardTraveler = () => {
                         </div>
                         <h3 className="text-teal-900 text-center">{lugar.nome}</h3>
                         <Rating value={lugar.classificacao} cancel={false} onChange={(e) => alert("valor: "+e.value+" | Não implementado")} className="text-center my-1" />
-                        <p>{lugar.descricao}</p>
+                        <p>{lugar.descricao.length <= 150 && lugar.descricao || lugar.descricao.slice(0, 147) + "..."}</p>
                     </div>
                 </div>
             ))}
