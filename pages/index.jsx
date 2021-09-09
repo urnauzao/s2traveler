@@ -37,6 +37,20 @@ export default function Home() {
     return src;
   };
 
+  const goToDetails = (id, tipe) => {
+    if (id === null) {
+      console.warn("PIHG42 : Opção inválida");
+      return;
+    }
+    switch (tipe) {
+      case "lugar":
+        window.location = `/lugares/${id}`;
+        break;
+      default:
+        console.warn("PIHG46 : Opção não implementada");
+    }
+  };
+
   const itemLugarTemplace = (lugar) => {
     return (
       <div className="product-item">
@@ -44,34 +58,41 @@ export default function Home() {
           <div className="p-mb-3">
             <Image
               loading="lazy"
-              src="/images/loading.git"
-              loader={() => myLoaderImage(lugar?.imagem_capa)}
+              // src="/images/loading.gif"
+              // loader={() => myLoaderImage(lugar?.imagem_capa)}
+              src={lugar?.imagem_capa || "/images/loading.gif"}
               width={"150vw"}
               height={"150vw"}
               alt={lugar.nome}
-              className="border-round shadow-8 product-image"
+              unoptimized={true}
+              className="border-round shadow-8 product-image cursor-pointer"
+              onClick={() => goToDetails(lugar?.id, "lugar")}
             />
           </div>
           <h4 className="p-mb-1 mb-1">
             {(lugar.nome.length <= 30 && lugar.nome) ||
               lugar.nome.slice(0, 27) + "..."}
           </h4>
-          <h6 className="p-mt-0 p-mb-3 mb-1">{lugar.visitas}</h6>
+          <h6 className="p-mt-0 p-mb-3 mb-1">
+            Visitado por: {lugar.visitas} pessoas
+          </h6>
           <span className="border-round px-2 text-white bg-blue-600">
             {lugar.status}
           </span>
           <div className="car-buttons p-mt-5 py-2">
             <Button
-              icon="pi pi-search"
               className="p-button p-button-rounded p-mr-2"
-            />
+              onClick={() => goToDetails(lugar?.id, "lugar")}
+            >
+              Detalhes
+            </Button>
             <Button
               icon="pi pi-star"
-              className="p-button-success p-button-rounded p-mr-2"
+              className="p-button-warning p-button-rounded p-mr-2 text-white"
             />
             <Button
-              icon="pi pi-cog"
-              className="p-button-help p-button-rounded"
+              icon="pi pi-heart"
+              className="p-button-danger p-button-rounded p-disabled"
             />
           </div>
         </div>
@@ -80,7 +101,7 @@ export default function Home() {
   };
 
   return (
-    <div className="">
+    <>
       <Header
         title={`${process.env.APP_NAME} | O lugar perfeito para alimentar o coração de todo viajante!`}
       />
@@ -111,9 +132,14 @@ export default function Home() {
               />
             </div>
           </div>
+          {/* Explore destinos perto de você:
+          Maricá 6,5 horas de carro Cidade de São
+          Paulo 15 minutos de carro Rio de Janeiro 6 horas de carro Guarujá 2
+          horas de carro São Sebastião 4,5 horas de carro Curitiba 6,5 horas de
+          carro Balneário Camboriú 9 horas de carro Bertioga 2 horas de carro */}
         </div>
       </main>
       <Footer />
-    </div>
+    </>
   );
 }
