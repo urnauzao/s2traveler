@@ -109,35 +109,42 @@ export default function Home() {
 
       <main className="container">
         <h1 className="">Bem Vindo S2Traveler</h1>
-
-        <p className="text-center mb-5">
-          O local ideal para quem gosta de viajar e está sempre em busca de
-          novos lugares!
-          <br />
-          Estamos em desenvolvimento
-        </p>
-        <div className="col-12">
-          <div className="col-12 col-offset-0 sm:col-12 md:col-12 lg:col-10 lg:col-offset-1 xl:col-8 xl:col-offset-2">
-            <div className="box shadow-5 px-2 py-4 bg-white border-round">
-              <Carousel
-                value={data.slice(0, 6)}
-                numVisible={window.innerWidth > 800 ? 3 : 2}
-                numScroll={2}
-                responsiveOptions={responsiveOptions}
-                className="custom-carousel px-0"
-                circular
-                autoplayInterval={3000}
-                itemTemplate={itemLugarTemplace}
-                header={<h2 className="text-center mb-3">Lugares em Alta!</h2>}
-              />
+        <article className="">
+          <p className="text-center mb-5">
+            O local ideal para quem gosta de viajar e está sempre em busca de
+            novos lugares!
+            <br />
+            Estamos em desenvolvimento
+          </p>
+          <div className="col-12">
+            <div className="col-12 col-offset-0 sm:col-12 md:col-12 lg:col-10 lg:col-offset-1 xl:col-8 xl:col-offset-2">
+              <div className="box shadow-5 px-2 py-4 bg-white border-round">
+                <Carousel
+                  value={data.slice(0, 6)}
+                  numVisible={window.innerWidth > 800 ? 3 : 2}
+                  numScroll={2}
+                  responsiveOptions={responsiveOptions}
+                  className="custom-carousel px-0"
+                  circular
+                  autoplayInterval={3000}
+                  itemTemplate={itemLugarTemplace}
+                  header={
+                    <h2 className="text-center mb-3">Lugares em Alta!</h2>
+                  }
+                />
+              </div>
             </div>
           </div>
-          {/* Explore destinos perto de você:
+        </article>
+        <article>
+          <h2>Inspiração para viagens futuras</h2>
+        </article>
+
+        {/* Explore destinos perto de você:
           Maricá 6,5 horas de carro Cidade de São
           Paulo 15 minutos de carro Rio de Janeiro 6 horas de carro Guarujá 2
           horas de carro São Sebastião 4,5 horas de carro Curitiba 6,5 horas de
           carro Balneário Camboriú 9 horas de carro Bertioga 2 horas de carro */}
-        </div>
       </main>
       <Footer />
     </>

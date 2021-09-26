@@ -1,4 +1,4 @@
-const urlGetLugares = "/api/lugares";
+const urlGetLugares = "/api/lugar";
 
 export { urlGetLugares };
 

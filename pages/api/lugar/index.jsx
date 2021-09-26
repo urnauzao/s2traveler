@@ -1,5 +1,5 @@
 // Fake users data
-import { lugares } from "../../src/mocks/lugares";
+import { lugares } from "../../../src/mocks/lugares";
 
 export default function handler(req, res) {
     // Get data from your database
