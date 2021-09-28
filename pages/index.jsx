@@ -9,6 +9,13 @@ import Image from "next/image";
 import useSwr from "swr";
 import { urlGetLugares } from "../src/repository/Lugares";
 import fetcher from "../src/services/HttpRequestService";
+import { TabView, TabPanel } from "primereact/tabview";
+import {
+  urlGetCidades,
+  urlGetEstados,
+  urlGetPaises,
+} from "../src/repository/urls";
+import ListaInspiracao from "../src/components/Home/listaInspiracao";
 
 export default function Home() {
   const responsiveOptions = [
@@ -28,10 +35,15 @@ export default function Home() {
       numScroll: 1,
     },
   ];
-  const { data, error } = useSwr(urlGetLugares, fetcher);
+  //abxio renomeamos a variavel data por lugares
+  const { data: lugares, error: lugaresError } = useSwr(urlGetLugares, fetcher);
+  const { data: paises, error: paisesError } = useSwr(urlGetPaises, fetcher);
+  const { data: estados, error: estadosError } = useSwr(urlGetEstados, fetcher);
+  const { data: cidades, error: cidadesError } = useSwr(urlGetCidades, fetcher);
 
-  if (error) return <div>Failed to load users</div>;
-  if (!data) return <div>Loading...</div>;
+  if (lugaresError) return <div>Failed to load users</div>;
+  if (!lugares) return <div>Loading...</div>;
+  // if(!estados) estados
 
   const myLoaderImage = (src) => {
     return src;
@@ -120,7 +132,7 @@ export default function Home() {
             <div className="col-12 col-offset-0 sm:col-12 md:col-12 lg:col-10 lg:col-offset-1 xl:col-8 xl:col-offset-2">
               <div className="box shadow-5 px-2 py-4 bg-white border-round">
                 <Carousel
-                  value={data.slice(0, 6)}
+                  value={lugares.slice(0, 6)}
                   numVisible={window.innerWidth > 800 ? 3 : 2}
                   numScroll={2}
                   responsiveOptions={responsiveOptions}
@@ -136,8 +148,38 @@ export default function Home() {
             </div>
           </div>
         </article>
-        <article>
-          <h2>Inspiração para viagens futuras</h2>
+        <article className="mt-5 w-screen">
+          <h2 className="text-center mt-5">Inspiração para viagens futuras</h2>
+          <p className="text-center mb-5">
+            O local ideal para quem gosta de viajar e está sempre em busca de
+            novos lugares!
+          </p>
+          <div className="col-12 px-5">
+            <div className="col-12 col-offset-0 sm:col-12 md:col-12 lg:col-10 lg:col-offset-1 xl:col-8 xl:col-offset-2 shadow-5 px-2 py-4 bg-white border-round">
+              <div className="tabview-demo">
+                <div className="card">
+                  {/* <h5>Default</h5> */}
+                  <TabView>
+                    <TabPanel header="Paises">
+                      {(paises && ListaInspiracao(paises)) || (
+                        <h1>Nenhum pais encontrado</h1>
+                      )}
+                    </TabPanel>
+                    <TabPanel header="Cidades">
+                      {(cidades && ListaInspiracao(cidades)) || (
+                        <h1>Nenhum pais encontrado</h1>
+                      )}
+                    </TabPanel>
+                    <TabPanel header="Locais">
+                      {(lugares && ListaInspiracao(lugares)) || (
+                        <h1>Nenhum pais encontrado</h1>
+                      )}
+                    </TabPanel>
+                  </TabView>
+                </div>
+              </div>
+            </div>
+          </div>
         </article>
 
         {/* Explore destinos perto de você:
