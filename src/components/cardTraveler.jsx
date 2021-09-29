@@ -36,7 +36,7 @@ const CardTraveler = () => {
                 height={200}
                 alt={lugar.nome}
                 unoptimized={true}
-                className="border-round shadow-8"
+                className="border-round"
               />
             </div>
             <h3 className="text-teal-900 text-center">{lugar.nome}</h3>

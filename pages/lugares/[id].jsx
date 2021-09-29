@@ -4,14 +4,30 @@ import useSwr from "swr";
 import Footer from "../../src/components/footer";
 import Header from "../../src/components/header";
 import Menu from "../../src/components/menu";
-import { Galleria } from "primereact/galleria";
-import { useRef } from "react";
+import { GMap } from "primereact/gmap";
+import { useState, useEffect } from "react";
+import {
+  loadGoogleMaps,
+  removeGoogleMaps,
+} from "./../../src/services/GoogleMapsService";
+import { Divider } from "primereact/divider";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
 export default function User() {
   const router = useRouter();
-  // const galeria = useRef(null);
+  const [googleMapsReady, setGoogleMapsReady] = useState(false); //googlemaps
+  const [overlays, setOverlays] = useState(null); //googlemaps
+  useEffect(() => {
+    loadGoogleMaps(() => {
+      setGoogleMapsReady(true);
+    });
+
+    return () => {
+      removeGoogleMaps();
+    };
+  }, []);
+
   const { data, error } = useSwr(
     router.query.id ? `/api/lugar/${router.query.id}` : null,
     fetcher
@@ -19,50 +35,32 @@ export default function User() {
 
   if (error) return <div>Failed to load user</div>;
   if (!data) return <div>Loading...</div>;
+  const googleOptions = {
+    //googlemaps
+    center: {
+      lat: data?.geolocation?.position?.lat || -25.691996234383048,
+      lng: data?.geolocation?.position?.lng || -54.43506105219341,
+    },
+    zoom: 14,
+  };
 
-  // const responsiveOptions = [
-  //   {
-  //     breakpoint: "1500px",
-  //     numVisible: 5,
-  //   },
-  //   {
-  //     breakpoint: "1024px",
-  //     numVisible: 3,
-  //   },
-  //   {
-  //     breakpoint: "768px",
-  //     numVisible: 2,
-  //   },
-  //   {
-  //     breakpoint: "560px",
-  //     numVisible: 1,
-  //   },
-  // ];
-
-  // const itemTemplate = (item) => {
-  //   return <Image src={item} alt={data?.nome} width={"100%"} height={"100%"} />;
-  // };
-
-  // const thumbnailTemplate = (item) => {
-  //   return <Image src={item} alt={data?.nome} width={50} height={50} />;
-  // };
+  const onMapReady = () => {
+    //googlemaps
+    setOverlays([
+      new google.maps.Marker({
+        position: {
+          lat: data?.geolocation?.position?.lat || -25.691996234383048,
+          lng: data?.geolocation?.position?.lng || -54.43506105219341,
+        },
+        title: data?.geolocation?.title,
+      }),
+    ]);
+  };
 
   return (
     <>
       <Header title={process.env.APP_NAME + " | " + data?.nome} />
       <Menu />
-      {/* <Galleria
-        ref={galeria}
-        value={data?.imagens}
-        responsiveOptions={responsiveOptions}
-        numVisible={9}
-        style={{ maxWidth: "50%" }}
-        circular
-        fullScreen
-        showItemNavigators
-        item={itemTemplate}
-        thumbnail={thumbnailTemplate}
-      /> */}
       <main className="container">
         <h1 className="my-3">{data?.nome}</h1>
         <div className="col-12">
@@ -81,7 +79,7 @@ export default function User() {
                   height={400}
                   alt={data?.nome}
                   unoptimized={true}
-                  className="border-round shadow-8"
+                  className="border-round"
                   layout="responsive"
                   // onClick={() => galeria.show()}
                 />
@@ -98,7 +96,7 @@ export default function User() {
                             src={value || "/images/loading.git"}
                             alt={data?.nome || "-"}
                             unoptimized={true}
-                            className="border-round shadow-8"
+                            className="border-round"
                             width={"100%"}
                             height={"100%"}
                             layout="responsive"
@@ -113,6 +111,15 @@ export default function User() {
             <div className="card bg-white border-round p-3">
               <p>{data?.descricao}</p>
             </div>
+
+            <Divider className="my-5 py-5" />
+            <h2 className="text-justify">Onde fica:</h2>
+            <GMap
+              options={googleOptions}
+              overlays={overlays}
+              style={{ width: "100%", minHeight: "320px" }}
+              onMapReady={onMapReady}
+            />
           </div>
         </div>
       </main>

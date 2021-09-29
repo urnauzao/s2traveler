@@ -77,7 +77,7 @@ export default function Home() {
               height={"150vw"}
               alt={lugar.nome}
               unoptimized={true}
-              className="border-round shadow-8 product-image cursor-pointer"
+              className="border-round product-image cursor-pointer"
               onClick={() => goToDetails(lugar?.id, "lugar")}
             />
           </div>
@@ -119,8 +119,8 @@ export default function Home() {
       />
       <Menu />
 
-      <main className="container">
-        <h1 className="">Bem Vindo S2Traveler</h1>
+      <main className="container pt-5">
+        <h1 className="mt-5">Bem Vindo S2Traveler</h1>
         <article className="">
           <p className="text-center mb-5">
             O local ideal para quem gosta de viajar e está sempre em busca de
