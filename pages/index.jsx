@@ -121,34 +121,30 @@ export default function Home() {
 
       <main className="container pt-5">
         <h1 className="mt-5">Bem Vindo S2Traveler</h1>
-        <article className="">
+        <article className="mt-5 col-12">
           <p className="text-center mb-5">
             O local ideal para quem gosta de viajar e está sempre em busca de
             novos lugares!
             <br />
             Estamos em desenvolvimento
           </p>
-          <div className="col-12">
-            <div className="col-12 col-offset-0 sm:col-12 md:col-12 lg:col-10 lg:col-offset-1 xl:col-8 xl:col-offset-2">
-              <div className="box shadow-5 px-2 py-4 bg-white border-round">
-                <Carousel
-                  value={lugares.slice(0, 6)}
-                  numVisible={window.innerWidth > 800 ? 3 : 2}
-                  numScroll={2}
-                  responsiveOptions={responsiveOptions}
-                  className="custom-carousel px-0"
-                  circular
-                  autoplayInterval={3000}
-                  itemTemplate={itemLugarTemplace}
-                  header={
-                    <h2 className="text-center mb-3">Lugares em Alta!</h2>
-                  }
-                />
-              </div>
+          <div className="col-12 col-offset-0 sm:col-12 md:col-12 lg:col-10 lg:col-offset-1 xl:col-8 xl:col-offset-2">
+            <div className="box shadow-5 px-2 py-4 bg-white border-round">
+              <Carousel
+                value={lugares.slice(0, 6)}
+                numVisible={window.innerWidth > 800 ? 3 : 2}
+                numScroll={2}
+                responsiveOptions={responsiveOptions}
+                className="custom-carousel px-0"
+                circular
+                autoplayInterval={3000}
+                itemTemplate={itemLugarTemplace}
+                header={<h2 className="text-center mb-3">Lugares em Alta!</h2>}
+              />
             </div>
           </div>
         </article>
-        <article className="mt-5 w-screen">
+        <article className="mt-5 col-12">
           <h2 className="text-center mt-5">Inspiração para viagens futuras</h2>
           <p className="text-center mb-5">
             O local ideal para quem gosta de viajar e está sempre em busca de
